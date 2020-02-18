@@ -12,27 +12,43 @@ public class TennisGame2 implements TennisGame
         this.player2Name = player2Name;
     }
 
-    public String getScore(){
-        String score = "";
-        score = tie(score);
-        score = Deuces(score);
-        
-        score = normal(score);
-        score = normal(score);
-        
-        score = normal(score);
-        score = normal(score);
-        
-        score = advantage(score);
-        
-        score = win(score);
+    public String getScore()
+    {
+    	if(isNormal())
+    		score = getLiteral(P1_Points) + "-" + getLiteral(P2_Points);
+    	if(isTie())
+    		getLiteral(P1_Points) + "-" + "-All"
+    	if(isDeuce())
+    		score = "Deuce";
+    	score = advantage(score);
+    	score = win(score);
         return score;
     }
-
+    
+    private boolean isDeuce() 
+    {
+    	return P1_Points==P2_Points && P1_Points>=3;
+    }
+    
+    private boolean isAdvantage(int firstPlayerPoints,int secondPlayerPoints) 
+    {
+    	return firstPlayerPoints> secondPlayerPoints && secondPlayerPoints>=4
+    }
+    
+    private boolean isNormal() 
+    {
+    	return P2_Points!=P1_Points;
+    }
+    
+    private boolean isTie() 
+    {
+    	return P1_Points == P2_Points && P1_Points < 4;
+    }
+    
 	private String advantage(String score) {
 		if (P1_Points > P2_Points && P2_Points >= 3)
         {
-            score = "Advantage player1";
+            score = "Advantage player1";  /* para cada condicion de los 2 ifs extraido el metodo */
         }
         
         if (P2_Points > P1_Points && P1_Points >= 3)
@@ -55,13 +71,12 @@ public class TennisGame2 implements TennisGame
 	}
 
 
-	private String normal(String score) 
+	private String normal() 
 	{
+		String result = "";
 		if (P2_Points != P1_Points)
-        {
-            score = getLiteral(P1_Points) + "-" + getLiteral(P2_Points);
-        }
-		return score;
+            result = getLiteral(P1_Points) + "-" + getLiteral(P2_Points);
+		return result;
 	}
 
 	private String getLiteral(int PlayerPoints) {
@@ -80,13 +95,7 @@ public class TennisGame2 implements TennisGame
 	private String tie(String score) {
 		if (P1_Points == P2_Points && P1_Points < 4)
         {
-            if (P1_Points==0)
-                score = "Love";
-            if (P1_Points==1)
-                score = "Fifteen";
-            if (P1_Points==2)
-                score = "Thirty";
-            score += "-All";
+            result
         }
 		return score;
 	}
